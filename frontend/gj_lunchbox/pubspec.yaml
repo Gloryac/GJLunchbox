@@ -1,0 +1,38 @@
+name: dj_lunchbox
+description: "A new Flutter project."
+publish_to: "none"  # Changed to "none" to avoid publishing if not intended
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  auth0_flutter: ^1.7.2
+  get: ^4.6.1 #state management
+  intl: ^0.18.1
+  url_launcher: ^6.1.5
+  smooth_page_indicator: ^1.0.0+2
+  iconsax: ^0.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_native_splash: ^2.3.2
+  smooth_page_indicator: ^1.1.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/Onboarding/
+
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
