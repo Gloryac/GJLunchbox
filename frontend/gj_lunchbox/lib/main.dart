@@ -1,3 +1,4 @@
+import 'package:dj_lunchbox/features/authentication/new_user_account_setup/screens/gender.dart';
 import 'package:dj_lunchbox/features/authentication/onboarding/onboarding_screen.dart';
 import 'package:dj_lunchbox/utils/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class App extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       home: OnboardingScreen(),
-      //home: GoalPage(currentPage: 1, totalPages: 5,),
+      //home: GenderPage(currentPage: 1, totalPages: 5,),
     );
   }
 }
