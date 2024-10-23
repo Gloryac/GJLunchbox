@@ -3,6 +3,8 @@ import 'package:dj_lunchbox/utils/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
+import 'features/authentication/new_user_account_setup/screens/goal.dart';
+
 void main(){
   runApp(const App());
 }
@@ -17,6 +19,7 @@ class App extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       home: OnboardingScreen(),
+      //home: GoalPage(currentPage: 1, totalPages: 5,),
     );
   }
 }

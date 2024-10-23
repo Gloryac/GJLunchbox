@@ -28,6 +28,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/Onboarding/
+    - assets/images/newUserAccountSetUp/
 
 
   fonts:
