@@ -29,4 +29,6 @@ class TextStrings{
   static const String accountSetUpTextPage21 = "Male";
   static const String accountSetUpTextPage22 = "Female";
 
+  static const String accountSetUpCalendarText = "February/ 20/ 1999";
+
 }

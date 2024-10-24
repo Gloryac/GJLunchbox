@@ -15,6 +15,10 @@ class ImageString {
   static const String page13 = "assets/images/newUserAccountSetUp/page13.png";
   static const String page21 = "assets/images/newUserAccountSetUp/pagee21.png";
   static const String page22 = "assets/images/newUserAccountSetUp/page22.png";
+  static const String page6 =  "assets/images/newUserAccountSetUp/page6.png";
+
+  //Icons
+  static const String calender = "assets/icons/calender.png";
 
 
 }
