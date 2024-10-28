@@ -1,5 +1,8 @@
+import 'package:dj_lunchbox/features/authentication/user_management/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import './utils/BuildPasswordField.dart';
+import './utils/BuildTextField.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -54,7 +57,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 8),
-            _buildTextField(
+            CustomTextField(
               controller: _displayNameController,
               hintText: "John Doe",
             ),
@@ -64,7 +67,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 8),
-            _buildTextField(
+            CustomTextField(
               controller: _emailController,
               hintText: "example@gmail.com",
             ),
@@ -74,7 +77,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 8),
-            _buildPasswordField(),
+            PasswordField(controller: _passwordController),
             SizedBox(height: 8),
             Text(
               "Case sensitive",
@@ -87,59 +90,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
             SizedBox(height: 16),
             TextButton(
               onPressed: () {
-                // Navigate back to the login page if needed
-                // Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
               },
               child: Text('Already have an account? Login!'),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  // TextField Widget with common styling
-  Widget _buildTextField(
-      {required TextEditingController controller, required String hintText}) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey[400]), // Placeholder color
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-        ),
-      ),
-    );
-  }
-
-  // Password field with toggle visibility
-  Widget _buildPasswordField() {
-    return TextField(
-      controller: _passwordController,
-      obscureText: _obscurePassword,
-      decoration: InputDecoration(
-        hintText: "********",
-        hintStyle: TextStyle(color: Colors.grey[400]),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-        ),
-        suffixIcon: IconButton(
-          icon:
-              Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-          onPressed: () {
-            setState(() {
-              _obscurePassword = !_obscurePassword;
-            });
-          },
         ),
       ),
     );
