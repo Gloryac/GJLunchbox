@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "984873723781",
+    "project_id": "dj-lunchbox",
+    "storage_bucket": "dj-lunchbox.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984873723781:android:b1861f21ae5aac7b4606ec",
+        "android_client_info": {
+          "package_name": "com.example.dj_lunchbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984873723781-43mdocl3age64p7toapm4ae75ao3r44i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmPYwzDLyADxXtxBVU00dgKfw0ergQNnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984873723781-43mdocl3age64p7toapm4ae75ao3r44i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
