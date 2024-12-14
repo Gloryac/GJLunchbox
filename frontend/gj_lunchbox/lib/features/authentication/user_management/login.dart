@@ -5,6 +5,8 @@ import './utils/BuildPasswordField.dart';
 import './utils/BuildTextField.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -14,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   String? _errorMessage;
-  bool _obscurePassword = true;
+  final bool _obscurePassword = true;
 
   Future<void> login() async {
     try {

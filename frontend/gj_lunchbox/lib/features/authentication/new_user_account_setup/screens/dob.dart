@@ -1,4 +1,3 @@
-import 'package:dj_lunchbox/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dj_lunchbox/utils/constants/colors.dart';
 import 'package:dj_lunchbox/utils/constants/text_strings.dart';

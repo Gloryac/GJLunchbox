@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class AppSizes{
   //padding and margin sizes

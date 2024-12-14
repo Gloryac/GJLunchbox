@@ -5,6 +5,8 @@ import './utils/BuildPasswordField.dart';
 import './utils/BuildTextField.dart';
 
 class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
 }
@@ -15,7 +17,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _passwordController = TextEditingController();
   final _displayNameController = TextEditingController();
   String? _errorMessage;
-  bool _obscurePassword = true;
+  final bool _obscurePassword = true;
   bool _agreeToTerms = false;
 
   Future<void> _register() async {

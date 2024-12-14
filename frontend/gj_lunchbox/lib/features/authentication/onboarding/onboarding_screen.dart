@@ -1,12 +1,10 @@
 import 'package:dj_lunchbox/utils/constants/text_strings.dart';
-import 'package:dj_lunchbox/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:get/get.dart';
 
-import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
-import '../../../utils/constants/sizes.dart';
 import 'onboardingNextButton.dart';
+import 'onboarding_controller.dart';
 import 'onboarding_dot_navigation.dart';
 import 'onboarding_page.dart';
 import 'onboarding_skip.dart';
@@ -16,11 +14,15 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OnBoardingController ());
+
     return Scaffold(
       body: Stack(
         children: [
           ///Horizontal Scrollable Pages
           PageView(
+            controller: controller.pageController,
+            onPageChanged: controller.updatePageIndicator,
             children: [
               OnboardingPage(
                 image: ImageString.slide1,

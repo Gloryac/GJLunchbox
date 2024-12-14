@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class ImageString {
   // App logo
@@ -20,5 +19,8 @@ class ImageString {
   //Icons
   static const String calender = "assets/icons/calender.png";
 
+  //Recipe
+  static const String recipe1 = "assets/images/Recipe/recipe1.png";
+  static const String recipe2 = "assets/images/Recipe/recipe2.png";
 
 }

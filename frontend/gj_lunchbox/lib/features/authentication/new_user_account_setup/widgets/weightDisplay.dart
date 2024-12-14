@@ -6,10 +6,10 @@ class WeightDisplay extends StatefulWidget {
   final ValueChanged<double>? onChanged;
 
   const WeightDisplay({
-    Key? key,
+    super.key,
     required this.value,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   _WeightDisplayState createState() => _WeightDisplayState();

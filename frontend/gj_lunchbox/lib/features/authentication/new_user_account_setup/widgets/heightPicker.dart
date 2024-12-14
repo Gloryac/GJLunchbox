@@ -127,7 +127,7 @@ class _HeightPickerState extends State<HeightPicker> {
             bottom: 10, // Adjusted for better spacing
             left: 0,
             right: 0,
-            child: Container(
+            child: SizedBox(
               height: 20,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

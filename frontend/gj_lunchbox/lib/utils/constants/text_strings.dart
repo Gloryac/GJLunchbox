@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class TextStrings{
 
@@ -30,5 +29,42 @@ class TextStrings{
   static const String accountSetUpTextPage22 = "Female";
 
   static const String accountSetUpCalendarText = "February/ 20/ 1999";
+
+  //Recipe Page Texts
+  static const String recipe = "Recipe";
+  static const String category1 = "Breakfast";
+  static const String category2 = "Lunch";
+  static const String category3 = "Dinner";
+  static const String category4 = "Snack";
+  static const String featured = "Featured";
+  static const String featuredTitle1 = "Asian white noodle";
+  static const String featuredTitle2 = "Healthy Taco Salad fresh vegedata";
+  static const String featuredAuthor1="James Spader";
+  static const String featuredAuthor2="Olivia Rizka";
+  static const String featuredTime1 = "20 Min";
+  static const String featuredTime2 = "15 Min";
+  static const String category = "Categories";
+  static const String popularRecipes = "Popular Recipes";
+  static const String popularTime1 = "20 min";
+  static const String popularTime2 = "12 min";
+  static const String popularCal1 = "120 Kcal";
+  static const String popularCal2 = "64 Kcal";
+  static const String popularRecipes1 = "Healthy Taco Salad with fresh vegedata";
+  static const String popularRecipes2 = "Japanese-style Pancakes Recipe";
+
+
+  //Meal Plan Page
+  static const String mealPlan = "Meal Plan";
+  static const String mealPlanWord = "Plan your weekly meal by adding recipes to the meals day wise";
+  static const String mealPlanDate = "Today, July 11";
+  static const String mealPlanCat1 = "Breakfast";
+  static const String mealPlanCat2 = "Lunch";
+  static const String mealPlanCat3 = "Dinner";
+  static const String mealPlanCat4 = "Snack";
+  static const String mealPlanEmpty = "Your Plate is empty!";
+  static const String mealPlanMakePlate = "Make your plate >";
+  static const String mealPlanPlate = "Eggs, toasted bread and bacon";
+  static const String mealPlanCal = "120 kcal";
+  static const String mealPlanTime = "20 min";
 
 }

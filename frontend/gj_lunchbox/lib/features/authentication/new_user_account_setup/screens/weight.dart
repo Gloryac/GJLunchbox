@@ -1,12 +1,9 @@
-import 'package:dj_lunchbox/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dj_lunchbox/utils/constants/colors.dart';
 import 'package:dj_lunchbox/utils/constants/text_strings.dart';
-import 'package:dj_lunchbox/utils/constants/image_strings.dart';
 import 'package:dj_lunchbox/utils/constants/sizes.dart';
 import 'package:dj_lunchbox/utils/constants/text_style.dart';
 import '../widgets/backButton.dart';
-import '../widgets/heightPicker.dart';
 import '../widgets/nextButton.dart';
 import '../widgets/skipButton.dart';
 import '../widgets/weightDisplay.dart';
