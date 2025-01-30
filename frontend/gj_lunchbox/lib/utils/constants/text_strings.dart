@@ -30,6 +30,26 @@ class TextStrings{
 
   static const String accountSetUpCalendarText = "February/ 20/ 1999";
 
+  //Login Texts
+  static const String login = "Login";
+  static const String loginEmail = "Enter Email";
+  static const String loginPassword = "Enter Password";
+  static const String loginForgotPassword = "Forgot password?";
+  static const String loginAccount = "Don't have an account?";
+  static const String loginSignUp = "Sign Up";
+
+  //Registration Text
+  static const String signUp = "Sign Up";
+  static const String signUpName = "Full Name";
+  static const String signUpNameHint = "John Doe";
+  static const String signUpEmail = "Email Address";
+  static const String signUpEmailHint = "example@gmail.com";
+  static const String signUpPassword = "Password";
+  static const String signUpCaseSensitive = "Case Sensitive";
+  static const String signUpTermsAndPolicies = "I agree to the Terms of Services and Privacy Policies";
+  static const String signUpButton = "Sign Up";
+  static const String signUpHaveAnAccount = "Already have an account? Login";
+
   //Recipe Page Texts
   static const String recipe = "Recipe";
   static const String category1 = "Breakfast";
@@ -66,5 +86,18 @@ class TextStrings{
   static const String mealPlanPlate = "Eggs, toasted bread and bacon";
   static const String mealPlanCal = "120 kcal";
   static const String mealPlanTime = "20 min";
+
+  //Account Page
+static const String profile ="Profile";
+static const String profileName ="Gloria Chebet";
+static const String profileWeight ="Weight";
+static const String profileAge ="Age";
+static const String profileHeight ="Height";
+static const String profileEditProfile ="Edit Your Profile";
+static const String profileFavouriteRecipe ="Favourite Recipes";
+static const String profileManageAccount ="Manage Account";
+static const String profileEditProfile2 ="Update your profile here. Make it yours!";
+static const String profileName2 ="Name";
+static const String profileEmail ="Email";
 
 }

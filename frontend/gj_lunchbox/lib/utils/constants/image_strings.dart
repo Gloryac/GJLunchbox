@@ -1,7 +1,7 @@
 
 class ImageString {
   // App logo
-  static const String logo = "frontend/gj_lunchbox/assets/logo/GJ Nutrition.jpg";
+  static const String logo = "assets/logo/GJ Nutrition.jpg";
 
   // Onboarding images
   static const String slide1 = "assets/images/Onboarding/slide1.png";
@@ -23,4 +23,6 @@ class ImageString {
   static const String recipe1 = "assets/images/Recipe/recipe1.png";
   static const String recipe2 = "assets/images/Recipe/recipe2.png";
 
+  //Meal Plan
+  static const String emoji = "assets/images/mealPlan/sadEmoji.png";
 }

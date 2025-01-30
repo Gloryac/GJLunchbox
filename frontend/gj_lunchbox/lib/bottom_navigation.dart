@@ -1,5 +1,6 @@
+import 'package:dj_lunchbox/features/account/screens/account_page.dart';
 import 'package:dj_lunchbox/features/mealPlan/screen/mealPlanPage.dart';
-import 'package:dj_lunchbox/features/recipe/screen/recipePage.dart';
+import 'package:dj_lunchbox/features/recipe/screen/recipe_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -7,7 +8,9 @@ import 'package:iconsax/iconsax.dart';
 import 'features/home/screen/home.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({super.key});
+  final String userId;
+
+  const BottomNavigation({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -38,5 +41,5 @@ class BottomNavigation extends StatelessWidget {
 
 class NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
-  final screens = [const HomeScreen(),const RecipePage(),const MealPlanPage(),const HomeScreen()];
+  final screens = [const HomeScreen(),const RecipePage(),const MealPlanPage(),const AccountPage()];
 }

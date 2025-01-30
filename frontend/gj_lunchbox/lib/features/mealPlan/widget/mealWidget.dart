@@ -1,66 +1,158 @@
+import 'package:dj_lunchbox/utils/constants/text_strings.dart';
+import 'package:dj_lunchbox/utils/constants/text_style.dart';
 import 'package:flutter/material.dart';
 
-class MealWidget extends StatelessWidget {
-  const MealWidget({super.key, required this.meals});
+import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/image_strings.dart';
+
+class MealWidget extends StatefulWidget {
+  const MealWidget({
+    super.key,
+    required this.meals,
+    required this.selectedDate,
+    required this.onMakePlate,
+  });
+
   final List<Meal> meals;
+  final DateTime selectedDate;
+  final Function(String category) onMakePlate;
+
+  @override
+  State<MealWidget> createState() => _MealWidgetState();
+}
+
+class _MealWidgetState extends State<MealWidget> {
+  String selectedCategory = 'Breakfast';
 
   @override
   Widget build(BuildContext context) {
+    final categories = ['Breakfast', 'Lunch', 'Supper', 'Snacks'];
+
+    // Filter meals for the selected category and date
+    final mealsForCategory = widget.meals.where((meal) {
+      return meal.type.toLowerCase() == selectedCategory.toLowerCase() &&
+          meal.date.day == widget.selectedDate.day &&
+          meal.date.month == widget.selectedDate.month &&
+          meal.date.year == widget.selectedDate.year;
+    }).toList();
+
+    final bool hasMeal = mealsForCategory.isNotEmpty;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (var meal in meals)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildMealSection(meal),
-              SizedBox(height: 16.0),
-            ],
+        // Horizontal category buttons
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: categories.map((category) {
+              final isSelected = selectedCategory == category;
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: isSelected ? AppColors.green : AppColors.gray,
+                    foregroundColor: isSelected ? AppColors.white : AppColors.lightGreen,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      selectedCategory = category;
+                    });
+                  },
+                  child: Text(category),
+                ),
+              );
+            }).toList(),
           ),
+        ),
+        const SizedBox(height: 16.0),
+
+        // Display meal or empty state
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: hasMeal
+                ? _buildMealContent(mealsForCategory.first)
+                : _buildEmptyState(selectedCategory, widget.onMakePlate),
+          ),
+        ),
       ],
     );
   }
 
-  Widget _buildMealSection(Meal meal) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            'assets/images/placeholder.jpg',
-            width: 100,
-            height: 100,
-          ),
-          SizedBox(width: 16.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${meal.type} Meal'),
-                SizedBox(height: 8.0),
-                Text(meal.name),
-                SizedBox(height: 8.0),
-                Row(
-                  children: [
-                    Icon(Icons.local_fire_department, size: 16.0),
-                    SizedBox(width: 4.0),
-                    Text('${meal.calories} Kcal'),
-                    SizedBox(width: 16.0),
-                    Icon(Icons.timer, size: 16.0),
-                    SizedBox(width: 4.0),
-                    Text('${meal.prepTime} Min'),
-                  ],
+  Widget _buildMealContent(Meal meal) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Meal image (placeholder)
+        Image.asset(
+          ImageString.emoji,
+          width: 100,
+          height: 100,
+        ),
+        const SizedBox(width: 16.0),
+
+        // Meal details
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                meal.name,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  const Icon(Icons.local_fire_department, size: 16.0),
+                  const SizedBox(width: 4.0),
+                  Text('${meal.calories} Kcal'),
+                  const SizedBox(width: 16.0),
+                  const Icon(Icons.timer, size: 16.0),
+                  const SizedBox(width: 4.0),
+                  Text('${meal.prepTime} Min'),
+                ],
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmptyState(String category, Function(String category) onMakePlate) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset(
+          ImageString.emoji,
+          width: 130,
+          height: 100,
+        ),
+        const SizedBox(height: 8.0),
+        Text(
+          TextStrings.mealPlanEmpty,
+          style: AppTextTheme.textStyles.bodyMedium
+        ),
+        const SizedBox(height: 16.0),
+        TextButton(
+          onPressed: () => onMakePlate(category),
+          child: Text(
+            TextStrings.mealPlanMakePlate,
+            style: AppTextTheme.textStyles.labelMedium?.copyWith(color: AppColors.orange)
+
+          ),
+        ),
+      ],
     );
   }
 }

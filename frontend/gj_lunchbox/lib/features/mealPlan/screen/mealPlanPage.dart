@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:dj_lunchbox/utils/constants/text_strings.dart';
+import 'package:dj_lunchbox/utils/constants/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../widget/dateWidget.dart';
-import '../widget/dayGridWidget.dart';
+
 import '../widget/mealWidget.dart';
+import 'mealCreationPage.dart';
 
 class MealPlanPage extends StatefulWidget {
   const MealPlanPage({super.key});
@@ -31,19 +33,43 @@ class _MealPlanPageState extends State<MealPlanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Meal Plan'),
+        title: Text(
+            TextStrings.mealPlan,
+            style: AppTextTheme.textStyles.headlineMedium,),
       ),
-      body: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
         children: [
-          DateWidget(
-            selectedDate: _selectedDate,
-            onDateTapped: _handleDateTapped,
-          ),
-          SizedBox(height: 16.0),
-          DayGridWidget(selectedDate: _selectedDate),
-          SizedBox(height: 16.0),
-          MealWidget(meals: _meals.where((meal) => meal.date.day == _selectedDate.day).toList()),
-        ],
+            Text(
+                TextStrings.mealPlanWord,
+                style: AppTextTheme.textStyles.bodyMedium,),
+            const SizedBox(height: 16.0),
+            DateWidget(
+              selectedDate: _selectedDate,
+              onDateTapped: _handleDateTapped,
+            ),
+            const SizedBox(height: 16.0),
+            Expanded(
+              child: MealWidget(
+                meals: _meals,
+                selectedDate: _selectedDate,
+                onMakePlate: (category) {
+                  // Navigate to a meal creation screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MealCreationPage(
+                        date: _selectedDate,
+                        category: category,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

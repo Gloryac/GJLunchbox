@@ -1,6 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dj_lunchbox/features/authentication/user_management/login.dart';
+import 'package:dj_lunchbox/features/home/screen/home.dart';
+import 'package:dj_lunchbox/utils/constants/colors.dart';
+import 'package:dj_lunchbox/utils/constants/text_strings.dart';
+import 'package:dj_lunchbox/utils/constants/text_style.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../../utils/constants/sizes.dart';
+
 import './utils/BuildPasswordField.dart';
 import './utils/BuildTextField.dart';
 
@@ -34,7 +42,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
       // Reload the user to apply the changes
       await userCredential.user?.reload();
 
+      // Create Firestore user document
+      await FirebaseFirestore.instance.collection('users').doc(userCredential.user?.uid).set({
+        'uid': userCredential.user?.uid,
+        'email': userCredential.user?.email,
+        'displayName': _displayNameController.text.trim(),
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
       print("Registered: ${userCredential.user?.email}");
+      // Navigate to Account Setup Screen
+      await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         _errorMessage = e.message; // Set the error message
@@ -45,57 +68,75 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign Up'),
-      ),
-      body: Padding(
+      body:  Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Full Name",
-              style: TextStyle(fontSize: 16),
+              TextStrings.signUp,
+              style: AppTextTheme.textStyles.headlineLarge,),
+            const SizedBox(height: AppSizes.spaceBtnSections),
+            Text(
+              TextStrings.signUpName,
+              style: AppTextTheme.textStyles.bodyMedium,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             CustomTextField(
               controller: _displayNameController,
-              hintText: "John Doe",
+              hintText: TextStrings.signUpNameHint,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: AppSizes.spaceBtnInputFields),
             Text(
-              "Email Address",
-              style: TextStyle(fontSize: 16),
+              TextStrings.signUpEmail,
+              style: AppTextTheme.textStyles.bodyMedium,
             ),
             SizedBox(height: 8),
             CustomTextField(
               controller: _emailController,
-              hintText: "example@gmail.com",
+              hintText: TextStrings.signUpEmailHint,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: AppSizes.spaceBtnInputFields),
             Text(
-              "Password",
-              style: TextStyle(fontSize: 16),
+              TextStrings.signUpPassword,
+              style: AppTextTheme.textStyles.bodyMedium,
             ),
             SizedBox(height: 8),
             PasswordField(controller: _passwordController),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              "Case sensitive",
-              style: TextStyle(fontSize: 12, color: Colors.grey),
+              TextStrings.signUpCaseSensitive,
+              style: AppTextTheme.textStyles.labelSmall?.copyWith(color: Colors.grey),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: AppSizes.spaceBtnItems),
             _buildTermsCheckbox(),
-            SizedBox(height: 16),
+            const SizedBox(height: AppSizes.spaceBtnSections),
             _buildSignUpButton(),
-            SizedBox(height: 16),
-            TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-              child: Text('Already have an account? Login!'),
+            const SizedBox(height: AppSizes.spaceBtnSections),
+            Center(
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: "Already have an account? ",
+                  style: AppTextTheme.textStyles.bodyMedium?.copyWith(color: AppColors.black),
+                  children: [
+                    TextSpan(
+                      text: "Login!",
+                      style: AppTextTheme.textStyles.labelMedium?.copyWith(color: AppColors.orange),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -153,14 +194,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
       child: ElevatedButton(
         onPressed: () {
           if (_agreeToTerms) {
-            // Perform sign-up
+            _register();
           } else {
             // Show error
           }
         },
         style: ElevatedButton.styleFrom(
-          // primary: Colors.green, // Background color
-          padding: EdgeInsets.symmetric(vertical: 16), // Button padding
+          foregroundColor: AppColors.white, backgroundColor: AppColors.green, padding: EdgeInsets.symmetric(vertical: 16), // Button padding
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0), // Rounded corners
           ),
