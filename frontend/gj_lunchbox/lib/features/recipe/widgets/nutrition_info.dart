@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:dj_lunchbox/utils/constants/text_style.dart';
 import 'package:flutter/material.dart';
 
 import '../model/recipe.dart';
@@ -21,26 +21,26 @@ class NutritionInfo extends StatelessWidget {
         children: [
           _buildNutritionItem(
             icon: Icons.local_fire_department,
-            value: '${recipe.calories}',
-            label: 'Calories',
+            value: recipe.calories,
+            //label: 'Calories',
             color: Colors.orange,
           ),
           _buildNutritionItem(
             icon: Icons.grain,
             value: '${recipe.carbs}g',
-            label: 'Carbs',
+            //label: 'Carbs',
             color: Colors.brown,
           ),
           _buildNutritionItem(
             icon: Icons.egg_outlined,
             value: '${recipe.proteins}g',
-            label: 'Protein',
+            //label: 'Protein',
             color: Colors.red,
           ),
           _buildNutritionItem(
             icon: Icons.water_drop,
             value: '${recipe.fats}g',
-            label: 'Fat',
+            //label: 'Fat',
             color: Colors.blue,
           ),
         ],
@@ -51,15 +51,15 @@ class NutritionInfo extends StatelessWidget {
   Widget _buildNutritionItem({
     required IconData icon,
     required String value,
-    required String label,
+    //required String label,
     required Color color,
   }) {
     return Column(
       children: [
-        Icon(icon, color: color),
+        Icon(icon, color: color,),
         const SizedBox(height: 4),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-        Text(label, style: TextStyle(color: Colors.grey.shade600)),
+        Text(value, style: AppTextTheme.textStyles.labelSmall),
+        //Text(label, style: TextStyle(color: Colors.grey.shade600)),
       ],
     );
   }

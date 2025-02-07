@@ -1,15 +1,49 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:dj_lunchbox/models/ingredient_item.dart';
 
-class IngredientInput extends StatelessWidget {
-  final Function(String) onSubmitted;
-  final int ingredientCount;
+class IngredientInputField extends StatefulWidget {
+  final String initialValue;
+  final ValueChanged<String> onChanged;
+  final int index;
 
-  const IngredientInput({
+  const IngredientInputField({
     super.key,
-    required this.onSubmitted,
-    required this.ingredientCount,
+    required this.initialValue,
+    required this.onChanged,
+    required this.index,
   });
+
+  @override
+  State<IngredientInputField> createState() => _IngredientInputFieldState();
+}
+
+class _IngredientInputFieldState extends State<IngredientInputField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+
+    // Listen for changes and update parent
+    _controller.addListener(() {
+      widget.onChanged(_controller.text);
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant IngredientInputField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != oldWidget.initialValue) {
+      _controller.text = widget.initialValue;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +62,16 @@ class IngredientInput extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: _controller, // Attach the controller
+        onChanged: widget.onChanged, // Capture user input
         decoration: InputDecoration(
-          hintText: 'Ingredient ${ingredientCount + 1}',
+          hintText: "Ingredient ${widget.index + 1}",
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide.none,
           ),
         ),
-        onSubmitted: onSubmitted,
       ),
     );
   }

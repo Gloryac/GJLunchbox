@@ -1,4 +1,6 @@
+import 'package:dj_lunchbox/features/recipe/widgets/recipeCard.dart';
 import 'package:flutter/material.dart';
+
 import '../model/recipe.dart';
 import '../services/recipe_service.dart';
 
@@ -8,39 +10,58 @@ class RecipeList extends StatelessWidget {
   final RecipeService recipeService;
 
   const RecipeList({
-    Key? key,
+    super.key,
     required this.selectedCategory,
     required this.searchQuery,
     required this.recipeService,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
+    Stream<List<Recipe>> recipeStream;
+
+    if (searchQuery.isNotEmpty) {
+      recipeStream = recipeService.searchRecipes(searchQuery);
+    } else {
+      recipeStream = recipeService.getRecipeByCategory(selectedCategory);
+    }
+
     return StreamBuilder<List<Recipe>>(
-      stream: recipeService.getRecipeByCategory(selectedCategory),
+      stream: recipeStream,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SliverToBoxAdapter(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return SliverToBoxAdapter(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const SliverToBoxAdapter(
-              child: Text('No recipes found for this category.'));
+        if (snapshot.hasError) {
+          return SliverToBoxAdapter(
+            child: Center(
+              child: Text('Error loading recipes: ${snapshot.error}'),
+            ),
+          );
         }
 
-        final recipes = snapshot.data!
-            .where((recipe) =>
-            recipe.name.toLowerCase().contains(searchQuery.toLowerCase()))
-            .toList();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SliverToBoxAdapter(
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
 
-        return SliverList(
+        final recipes = snapshot.data ?? [];
+
+        if (recipes.isEmpty) {
+          return const SliverToBoxAdapter(
+            child: Center(child: Text('No recipes found')),
+          );
+        }
+
+        return SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 24.0,
+            childAspectRatio: 0.75,
+          ),
           delegate: SliverChildBuilderDelegate(
                 (context, index) {
               final recipe = recipes[index];
-              return ListTile(
-                title: Text(recipe.name),
-                subtitle: Text(recipe.category),
-              );
+              return RecipeCard(recipe: recipe);
             },
             childCount: recipes.length,
           ),

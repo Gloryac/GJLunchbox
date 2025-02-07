@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../model/recipe.dart';
-import '../widgets/nutrition_info.dart';
+import '../../recipe/model/recipe.dart';
+import '../widget/suggestedRecipes/nutritionInfo.dart';
+
 
 // ... other imports (your model and widgets)
 

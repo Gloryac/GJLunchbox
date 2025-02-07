@@ -1,4 +1,3 @@
-import 'package:dj_lunchbox/features/recipe/screen/recipe_page.dart';
 import 'package:dj_lunchbox/utils/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -8,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'features/authentication/onboarding/screen/onboarding_screen.dart';
 import 'features/authentication/user_management/login.dart';
 import 'firebase_options.dart';
-import 'bottom_navigation.dart';
 
 
 void main() async {
@@ -38,6 +36,7 @@ class App extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       home: SplashScreen()
+
     );
   }
 }

@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dj_lunchbox/features/recipe/widgets/categories.dart';
-import 'package:dj_lunchbox/features/recipe/widgets/popular_recipes.dart';
-import 'package:dj_lunchbox/utils/constants/colors.dart';
-import 'package:dj_lunchbox/utils/constants/text_strings.dart';
-import 'package:dj_lunchbox/utils/constants/text_style.dart';
+
 import 'package:flutter/material.dart';
 
 import '../services/recipe_service.dart';
-import '../widgets/featured_recipes.dart';
+
 import '../widgets/recipe_list.dart';
 import '../widgets/search_bar.dart';
 
@@ -26,6 +23,7 @@ String searchQuery = '';
 final RecipeService _recipeService = RecipeService()
 ;
 
+
 @override
 void initState() {
   super.initState();
@@ -40,9 +38,10 @@ Future<void> fetchCategories() async {
           .map((doc) => doc.data()["Category"]?.toString() ?? "")
           .where((category) => category.isNotEmpty)
           .toSet();
-
+      print("Fetched categories: $fetchedCategories");
       setState(() {
         categories = ["All", ...fetchedCategories];
+        print("Final categories list: $categories");
         isLoading = false;
       });
     }
@@ -53,7 +52,9 @@ Future<void> fetchCategories() async {
 }
 
 void onCategorySelected(String category) {
-  setState(() => selectedCategory = category);
+  print('Category selected: $category');
+  print('Current category selected: $categories');
+  setState((){selectedCategory = category;});
 }
 void onSearch(String query) {
   setState(() => searchQuery = query);
@@ -78,8 +79,8 @@ Widget build(BuildContext context) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const FeaturedSection(),
-                const SizedBox(height: 24),
+                // const FeaturedSection(),
+                // const SizedBox(height: 24),
                 Text(
                   'Categories',
                   style: Theme.of(context).textTheme.headlineSmall,
@@ -89,15 +90,11 @@ Widget build(BuildContext context) {
                   const LinearProgressIndicator()
                 else
                   Categories(
-                    //categories: categories,
+                    categories: categories,
                     selectedCategory: selectedCategory,
                     onCategorySelected: onCategorySelected,
                   ),
-                const SizedBox(height: 24),
-                Text(
-                  'All Recipes',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+
                 const SizedBox(height: 16),
               ],
             ),

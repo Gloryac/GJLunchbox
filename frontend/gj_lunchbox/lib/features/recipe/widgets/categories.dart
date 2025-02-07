@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Categories extends StatelessWidget {
-  final List<String> categories= ["All", "Lunch", "Snacks"];
+  final List<String> categories;
+  final String selectedCategory; // This should be a String
   final void Function(String) onCategorySelected;
-  final String selectedCategory;
 
-  Categories({
+  const Categories({
     super.key,
-    //required this.categories,
-    required this.onCategorySelected,
+    required this.categories,
     required this.selectedCategory,
+    required this.onCategorySelected,
   });
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -20,13 +21,13 @@ class Categories extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final category = categories[index];
-          final isSelected = category == selectedCategory;
+          final isSelected = category == selectedCategory; // Compare strings
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: FilterChip(
               label: Text(category),
               selected: isSelected,
-              onSelected: (_) => onCategorySelected(category),
+              onSelected: (_) => onCategorySelected(category), // Pass single category
               backgroundColor: Colors.grey.shade200,
               selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
               checkmarkColor: Theme.of(context).primaryColor,
@@ -37,43 +38,3 @@ class Categories extends StatelessWidget {
     );
   }
 }
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 36, // Fixed height for consistency
-//       child: ListView.builder(
-//         scrollDirection: Axis.horizontal,
-//         padding: const EdgeInsets.symmetric(horizontal: 16),
-//         itemCount: categories.length,
-//         itemBuilder: (context, index) {
-//           final category = categories[index];
-//           final isSelected = category == selectedCategory;
-//
-//           return Padding(
-//             padding: const EdgeInsets.only(right: 8.0),
-//             child: MaterialButton(
-//               onPressed: () => onCategorySelected(category),
-//               elevation: 0,
-//               color: isSelected ? const Color(0xFF4CAF50) : const Color(0xFFF5F5F5),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(18),
-//               ),
-//               padding: const EdgeInsets.symmetric(horizontal: 16),
-//               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//               child: Text(
-//                 category,
-//                 style: TextStyle(
-//                   color: isSelected ? Colors.white : Colors.black87,
-//                   fontSize: 14,
-//                   fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

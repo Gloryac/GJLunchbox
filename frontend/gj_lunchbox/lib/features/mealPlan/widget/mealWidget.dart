@@ -22,11 +22,11 @@ class MealWidget extends StatefulWidget {
 }
 
 class _MealWidgetState extends State<MealWidget> {
-  String selectedCategory = 'Breakfast';
+  String selectedCategory = 'Lunch';
 
   @override
   Widget build(BuildContext context) {
-    final categories = ['Breakfast', 'Lunch', 'Supper', 'Snacks'];
+    final categories = [ 'Lunch', 'Snacks'];
 
     // Filter meals for the selected category and date
     final mealsForCategory = widget.meals.where((meal) {
@@ -87,7 +87,7 @@ class _MealWidgetState extends State<MealWidget> {
 
   Widget _buildMealContent(Meal meal) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // Meal image (placeholder)
         Image.asset(
