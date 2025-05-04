@@ -16,20 +16,21 @@ dependencies:
   url_launcher: ^6.1.5
   smooth_page_indicator: ^1.0.0+2
   iconsax: ^0.0.8
-  firebase_auth: ^5.3.1
-  firebase_core: ^3.6.0
-  cloud_firestore: ^5.6.0
+  firebase_auth: ^5.3.4
+  firebase_core: ^3.9.0
+  cloud_firestore: ^5.6.6
   shared_preferences: ^2.3.4
   fl_chart: ^0.65.0
   image_picker: ^1.1.2
   http: ^1.2.2
+  google_sign_in: ^6.1.14
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
   flutter_native_splash: ^2.3.2
-  smooth_page_indicator: ^1.1.0
 
 flutter:
   uses-material-design: true
@@ -39,7 +40,9 @@ flutter:
     - assets/icons/
     - assets/images/Recipe/
     - assets/images/mealPlan/
+    - assets/logo/gj_nutrition.jpg
     - assets/logo/
+    - assets/icons/google_icon.png
 
 
 
@@ -49,3 +52,4 @@ flutter:
         - asset: assets/fonts/Roboto-Bold.ttf
         - asset: assets/fonts/Roboto-Medium.ttf
         - asset: assets/fonts/Roboto-Regular.ttf
+   

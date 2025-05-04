@@ -1,11 +1,11 @@
 import 'package:dj_lunchbox/features/recipe/screen/recipeInstructions.dart';
 import 'package:dj_lunchbox/utils/constants/text_style.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import '../model/recipe.dart';
 import 'nutrition_info.dart';
 
-class RecipeCard extends StatefulWidget { // Use StatefulWidget for favorite functionality
+class RecipeCard extends StatefulWidget {
   final Recipe recipe;
 
   const RecipeCard({super.key, required this.recipe});
@@ -15,97 +15,118 @@ class RecipeCard extends StatefulWidget { // Use StatefulWidget for favorite fun
 }
 
 class _RecipeCardState extends State<RecipeCard> {
-  bool isFavorite = false; // Track favorite state
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      elevation: 2, // Add elevation for a subtle lift
-      shape: RoundedRectangleBorder( // Rounded corners for the card
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: InkWell( // Make the card tappable
-        onTap: () {
-         Navigator.push(
-             context,
-             MaterialPageRoute(
-                 builder: (context)=>RecipeDetailScreen(recipe: widget.recipe,)));
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack( // Use a Stack to overlay the favorite button
-              children: [
-                // Image or Placeholder
-                widget.recipe.imageUrl == null
-                    ? Container(
-                  height: 150,
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: Icon(Icons.restaurant,
-                        size: 50, color: Colors.grey),
-                  ),
-                )
-                    : ClipRRect( // Clip image to card's rounded corners
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                  ),
-                  child: Image.network(
-                    widget.recipe.imageUrl!,
-                    fit: BoxFit.cover,
-                    height: 150,
-                    width: double.infinity, // Make image fill card width
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        height: 150,
-                        color: Colors.grey[300],
-                        child: const Center(
-                          child: Icon(Icons.error,
-                              size: 50, color: Colors.grey),
-                        ),
-                      );
-                    },
-                  ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Card(
+          margin: const EdgeInsets.all(8),
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(10),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      RecipeDetailScreen(recipe: widget.recipe),
                 ),
-
-                // Favorite Button (Positioned in the corner)
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isFavorite = !isFavorite;
-                        // Update your data model or backend here
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-
-            // Recipe Text Content
-            Padding(
-              padding: const EdgeInsets.all(12.0), // Increased padding
+              );
+            },
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: constraints.maxWidth * 0.45,
+                minHeight: 180,
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(widget.recipe.name,
-                      style: AppTextTheme.textStyles.labelMedium), // Larger font size
-                  const SizedBox(height: 4), // Spacing between title and nutrition info
-                  NutritionInfo(recipe: widget.recipe),
+                  // Image Section - Fixed aspect ratio
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(10),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: widget.recipe.imageUrl != null &&
+                              widget.recipe.imageUrl!.isNotEmpty
+                          ? CachedNetworkImage(
+                              imageUrl: widget.recipe.imageUrl!,
+                              fit: BoxFit.cover,
+                              memCacheWidth: 300,
+                              placeholder: (context, url) => Container(
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) => Container(
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: Icon(Icons.broken_image, size: 40),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              color: Colors.grey[300],
+                              child: const Center(
+                                child: Icon(Icons.fastfood,
+                                    size: 40, color: Colors.white),
+                              ),
+                            ),
+                    ),
+                  ),
+
+                  // Content Section - Flexible with constraints
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 6),
+                      constraints: const BoxConstraints(
+                        minHeight: 80, // Minimum space for text + nutrition
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Recipe Name - Flexible with max lines
+                          Flexible(
+                            child: Text(
+                              widget.recipe.name,
+                              style:
+                                  AppTextTheme.textStyles.labelMedium?.copyWith(
+                                fontSize: 14,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+
+                          // Nutrition Info - Fixed height container
+                          SizedBox(
+                            height: 36, // Reduced from 40
+                            child: NutritionInfo(
+                              recipe: widget.recipe,
+                              isCompact: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

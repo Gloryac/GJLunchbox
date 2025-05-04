@@ -21,7 +21,14 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = '1.8'
+        freeCompilerArgs += [
+            '-Xjvm-default=all',
+            '-Xskip-metadata-version-check'
+         ]
+    }
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
     }
 
     defaultConfig {
@@ -33,6 +40,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true
          manifestPlaceholders += [auth0Domain: "dev-n6ayoeyocngwbam1.us.auth0.com", auth0Scheme: "https"]
     }
 
@@ -47,4 +55,12 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-auth-ktx:22.3.1' // Specific version recommended
+    implementation 'com.google.android.gms:play-services-auth:20.7.0' // For Google Sign-In
+    implementation platform('com.google.firebase:firebase-bom:32.7.0') // Firebase BoM
+    implementation 'androidx.multidex:multidex:2.0.1' // For multidex support 
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.23'
 }

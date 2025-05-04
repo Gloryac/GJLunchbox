@@ -54,9 +54,9 @@ class RecipeList extends StatelessWidget {
         return SliverGrid(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 24.0,
-            childAspectRatio: 0.75,
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
+            childAspectRatio: 0.7,
           ),
           delegate: SliverChildBuilderDelegate(
                 (context, index) {

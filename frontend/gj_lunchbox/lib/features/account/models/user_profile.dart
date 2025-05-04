@@ -15,7 +15,22 @@ class UserProfile {
     this.imageUrl,
   });
 
-  factory UserProfile.fromJson(Map<String, dynamic>json){
-    return UserProfile(name: json['name'], email: json['email'], weight: json['weight'], age: json['age'], height: json['height']);
+  factory UserProfile.fromJson(Map<String, dynamic>json) {
+    return UserProfile(
+      name: json['name'] ?? '', 
+      email: json['email'] ?? '', 
+      weight: (json['weight'] ?? 0).toDouble(), 
+      age: json['age'] ?? 0, 
+      height: (json['height'] ?? 0).toDouble(),
+      imageUrl: json['imageUrl'],
+    );
   }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'email': email,
+        'weight': weight,
+        'age': age,
+        'height': height,
+        'imageUrl': imageUrl,
+      };
 }

@@ -18,7 +18,7 @@ class _PasswordFieldState extends State<PasswordField> {
       controller: widget.controller,
       obscureText: _obscurePassword,
       decoration: InputDecoration(
-        hintText: "********",
+        hintText: "Enter your password",
         hintStyle: TextStyle(color: Colors.grey[400]),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),

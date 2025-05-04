@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Color(0xFFEAEDE9), // Match your splash.yaml background color
       body: Center(
         child: Image.asset(
-          'frontend/gj_lunchbox/assets/logo/GJ Nutrition.jpg', // Update the path to your logo
+          'assets/logo/gj_nutrition.jpg', // Update the path to your logo
           height: 150,
         ),
       ),
