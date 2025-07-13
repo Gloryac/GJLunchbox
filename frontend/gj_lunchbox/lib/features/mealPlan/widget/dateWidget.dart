@@ -8,13 +8,15 @@ class DateWidget extends StatelessWidget {
     super.key,
     required this.selectedDate,
     required this.onDateTapped,
+    this.onDateChange
   });
-
+  final VoidCallback? onDateChange;
   final DateTime selectedDate;
   final Function(DateTime) onDateTapped;
 
   @override
   Widget build(BuildContext context) {
+
     String formatDate(DateTime date) {
       final currentDate = DateTime.now();
       final normalizedCurrent = DateTime(currentDate.year, currentDate.month,currentDate.day);
@@ -43,7 +45,8 @@ class DateWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           GestureDetector(
-            onTap: () => onDateTapped(selectedDate),
+            onTap: () =>onDateTapped(selectedDate)
+            ,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -71,7 +74,8 @@ class DateWidget extends StatelessWidget {
     return weekDates.map((date) {
       final bool isSelected = selectedDate.day == date.day;
       return GestureDetector(
-        onTap: () => onDateTapped(date),
+        onTap: () =>{ onDateTapped(date)
+        },
         child: Column(
           children: [
             // Date (e.g., "11")

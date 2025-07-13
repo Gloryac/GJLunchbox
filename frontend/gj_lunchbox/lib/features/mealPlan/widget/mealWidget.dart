@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
+import '../../recipe/model/recipe.dart';
 
 class MealWidget extends StatefulWidget {
   const MealWidget({
     super.key,
-    required this.meals,
+    this.recipe,
     required this.selectedDate,
     required this.onMakePlate,
+    this.onCategoryChange
   });
+  final void Function(String category)? onCategoryChange;
+  final Recipe? recipe;
 
-  final List<Meal> meals;
+  // final List<Meal> meals;
   final DateTime selectedDate;
   final Function(String category) onMakePlate;
 
@@ -26,17 +30,18 @@ class _MealWidgetState extends State<MealWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('MealWidget building. Recipe is: ${widget.recipe?.category}');
     final categories = [ 'Lunch', 'Snacks'];
 
     // Filter meals for the selected category and date
-    final mealsForCategory = widget.meals.where((meal) {
-      return meal.type.toLowerCase() == selectedCategory.toLowerCase() &&
-          meal.date.day == widget.selectedDate.day &&
-          meal.date.month == widget.selectedDate.month &&
-          meal.date.year == widget.selectedDate.year;
-    }).toList();
+    // final mealsForCategory = widget.meals.where((meal) {
+    //   return meal.type.toLowerCase() == selectedCategory.toLowerCase() &&
+    //       meal.date.day == widget.selectedDate.day &&
+    //       meal.date.month == widget.selectedDate.month &&
+    //       meal.date.year == widget.selectedDate.year;
+    // }).toList();
 
-    final bool hasMeal = mealsForCategory.isNotEmpty;
+    // final bool hasMeal = mealsForCategory.isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,6 +63,7 @@ class _MealWidgetState extends State<MealWidget> {
                     setState(() {
                       selectedCategory = category;
                     });
+                    widget.onCategoryChange?.call(selectedCategory);
                   },
                   child: Text(category),
                 ),
@@ -76,8 +82,8 @@ class _MealWidgetState extends State<MealWidget> {
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8.0),
             ),
-            child: hasMeal
-                ? _buildMealContent(mealsForCategory.first)
+            child: widget.recipe != null
+                ? _buildMealContent(widget.recipe!)
                 : _buildEmptyState(selectedCategory, widget.onMakePlate),
           ),
         ),
@@ -85,15 +91,26 @@ class _MealWidgetState extends State<MealWidget> {
     );
   }
 
-  Widget _buildMealContent(Meal meal) {
+  Widget _buildMealContent(Recipe recipe) {
+
+    print('Displaying meal content for: ${recipe.name}');
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // Meal image (placeholder)
-        Image.asset(
-          ImageString.emoji,
-          width: 100,
-          height: 100,
+        // Image.asset(
+        //   ImageString.emoji,
+        //   width: 100,
+        //   height: 100,
+        // ),
+        Image.network(
+          recipe.imageUrl ?? '',
+          width: 80,
+          height: 80,
+          fit: BoxFit.cover,
+          errorBuilder: (context, object, stackTrace) {
+            return const Icon(Icons.image_not_supported);
+          },
         ),
         const SizedBox(width: 16.0),
 
@@ -103,7 +120,7 @@ class _MealWidgetState extends State<MealWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                meal.name,
+                recipe.name,
                 style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -114,11 +131,11 @@ class _MealWidgetState extends State<MealWidget> {
                 children: [
                   const Icon(Icons.local_fire_department, size: 16.0),
                   const SizedBox(width: 4.0),
-                  Text('${meal.calories} Kcal'),
+                  Text('${recipe.calories} Kcal'),
                   const SizedBox(width: 16.0),
                   const Icon(Icons.timer, size: 16.0),
                   const SizedBox(width: 4.0),
-                  Text('${meal.prepTime} Min'),
+                  Text('${recipe.cookTime} Min'),
                 ],
               ),
             ],

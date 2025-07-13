@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dj_lunchbox/features/authentication/user_management/login.dart';
 import 'package:dj_lunchbox/features/home/screen/home.dart';
+import 'package:dj_lunchbox/features/recipe/screen/recipe_page.dart';
 import 'package:dj_lunchbox/utils/constants/colors.dart';
 import 'package:dj_lunchbox/utils/constants/text_strings.dart';
 import 'package:dj_lunchbox/utils/constants/text_style.dart';
@@ -55,7 +56,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       await Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => RecipePage(),
         ),
       );
     } on FirebaseAuthException catch (e) {

@@ -8,8 +8,9 @@ import '../../../recipe/screen/recipeInstructions.dart';
 
 class RecipeCard extends StatefulWidget {
   final Recipe recipe;
+  final VoidCallback? onFavoriteToggled;
 
-  const RecipeCard({super.key, required this.recipe});
+  const RecipeCard({super.key, required this.recipe,this.onFavoriteToggled,});
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -17,6 +18,49 @@ class RecipeCard extends StatefulWidget {
 
 class _RecipeCardState extends State<RecipeCard> {
   bool isFavorite = false;
+  bool isLoading = true;
+  late final RecipeFavoriteService _favoriteService;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _favoriteService = RecipeFavoriteService();
+    _loadFavoriteStatus();
+  }
+  Future<void> _loadFavoriteStatus() async {
+    setState(() {
+      isLoading = true; // Set loading to true while fetching status
+    });
+    final status = await _favoriteService.checkIfFavorite(widget.recipe.id);
+    if (mounted) { // Check if the widget is still mounted before setState
+      setState(() {
+        isFavorite = status;
+        isLoading = false; // Set loading to false once status is known
+      });
+    }
+  }
+  Future<void> _handleFavoriteToggle() async {
+    // Temporarily disable the button while the operation is in progress
+    setState(() {
+      isLoading = true;
+    });
+
+    await _favoriteService.toggleFavorite(
+      context: context,
+      recipe: widget.recipe,
+      onFavoriteStatusChanged: (isFav) {
+        if (mounted) {
+          setState(() {
+            isFavorite = isFav;
+            isLoading = false; // Set loading to false after status update
+          });
+          // Call the callback if it's provided
+          widget.onFavoriteToggled?.call(); // <--- CALL THE CALLBACK HERE
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,12 +162,7 @@ class _RecipeCardState extends State<RecipeCard> {
                   color: isFavorite ? Colors.red : Colors.grey,
                   size: 24,
                 ),
-                onPressed: () {
-                  setState(() {
-                    isFavorite = !isFavorite;
-                  });
-                  // TODO: Add logic to save favorite status
-                },
+                onPressed: isLoading ? null : _handleFavoriteToggle,
               ),
             ),
           ),

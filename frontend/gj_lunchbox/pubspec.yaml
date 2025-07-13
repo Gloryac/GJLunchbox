@@ -25,6 +25,7 @@ dependencies:
   http: ^1.2.2
   google_sign_in: ^6.1.14
   cached_network_image: ^3.4.1
+  calendar_date_picker2: ^2.0.0
 
 dev_dependencies:
   flutter_test:

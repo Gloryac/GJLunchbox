@@ -27,7 +27,7 @@ class BottomNavigation extends StatelessWidget {
             onDestinationSelected: (index) => controller.selectedIndex.value = index,
             destinations: [
               NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-              NavigationDestination(icon: Icon(Iconsax.shop), label: 'Recipe'),
+              //NavigationDestination(icon: Icon(Iconsax.shop), label: 'Favorites'),
               NavigationDestination(icon: Icon(Iconsax.calendar), label: 'Meal Plan'),
               NavigationDestination(icon: Icon(Iconsax.user), label: 'Account'),
             ],
@@ -41,5 +41,6 @@ class BottomNavigation extends StatelessWidget {
 
 class NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
-  final screens = [const HomeScreen(),const RecipePage(),const MealPlanPage(),const AccountPage()];
+  final screens = [const RecipePage(),const MealPlanPage(),const AccountPage()];
 }
+
